@@ -1,0 +1,25 @@
+# Python geçici dosyaları
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Sanal çevreler
+venv/
+.venv/
+env/
+ENV/
+
+# Yerel veritabanları ve yapılandırmalar
+instance/
+*.db
+*.sqlite
+.env
+
+# Git havuzu
+.git/
+.gitignore
+
+# IDE ayarları
+.vscode/
+.idea/

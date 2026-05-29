@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: gazi_task_db
+    restart: always
+    environment:
+      POSTGRES_USER: gazi_admin
+      POSTGRES_PASSWORD: gazi_secret_pass
+      POSTGRES_DB: gazi_tasks
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+
+  web:
+    build: .
+    container_name: gazi_task_web
+    restart: always
+    command: gunicorn --bind 0.0.0.0:5000 run:app
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - SECRET_KEY=gazi-blg106-gizli-anahtar-12345
+      - DATABASE_URL=postgresql://gazi_admin:gazi_secret_pass@db:5432/gazi_tasks
+      - FLASK_DEBUG=False
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
