@@ -17,3 +17,6 @@ Gazi Üniversitesi BLG106 dersi kapsamında geliştirilmiş, modern ve minimalis
 2. Proje dizininde şu komutu çalıştırın:
    ```bash
    docker-compose up --build
+
+   ## 🎬 Proje Demo Videosu
+Projenin çalışır haldeki videosuna [BURAYA TIKLAYARAK](https://youtu.be/eEEdDRCWrVk) ulaşabilirsiniz.
