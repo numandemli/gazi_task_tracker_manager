@@ -8,7 +8,7 @@ Bu dosya, senin projedeki "denetleyici" rolünü ve AI ile nasıl iş birliği y
 
 **Öğrenci:** Numan Demli  
 **Ders:** BLG106 - Web Programlama  
-**Proje:** Minimalist Görev Yönetimi Uygulaması  
+**Proje:** Görev Yönetimi Uygulaması  
 
 ## 📑 Süreç Özeti
 
@@ -35,3 +35,12 @@ Uygulama, yerel SQLite ortamından üretim seviyesi PostgreSQL ve Gunicorn mimar
 
 ### 6. Git Disiplini
 Proje sonunda, AI tarafından hazırlanan bir PowerShell scripti ile geliştirme süreci mantıksal parçalara bölünmüş ve 15 anlamlı commit'ten oluşan bir tarihsel geçmiş (Git History) oluşturulmuştur.
+
+### 7. Kanıtlar (Bölüm 7.4)
+
+#### 7.4.1. Prompt-Yanıt Alıntısı
+**Müdahale:** "Ekteki yönergelerden hangisi eksikse tamamlayalım."
+**Ajanın Yanıtı:** Ajan bu müdahale sonrası sadece temel işlemleri yapmak yerine "Priority", "Search" ve "Today Filter" özelliklerini kapsayan genişletilmiş bir geliştirme planı sundu.
+
+#### 7.4.2. Ekran Görüntüleri
+İlgili görseller `docs/kanitlar/` klasöründe bulunmaktadır.

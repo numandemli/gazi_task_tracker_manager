@@ -1,6 +1,6 @@
 # BLG106 Proje Teknik Raporu
 
-**Proje Adı:** Minimalist Görev Yönetimi Sistemi  
+**Proje Adı:** Görev Yönetimi Sistemi  
 **Geliştirici:** Numan Demli  
 **Teknoloji Yığını:** Flask 3.0, SQLAlchemy 2.0, PostgreSQL, Docker  
 

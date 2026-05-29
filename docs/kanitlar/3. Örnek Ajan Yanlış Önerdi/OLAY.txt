@@ -1,0 +1,5 @@
+Olay: Ajan, başlangıçta Git geçmişini 15 parçaya bölmek için doğrudan terminal komutları yazmıştı. Ancak senin sisteminde Git kurulu olmadığı için bu komutlar hata verdi.
+
+Fark etmem : "GitHub yüklü değil, Git komutları çalışmıyor" diyerek durumu belirttim.
+
+Düzeltme: Ajana bu hatasını fark ettirip, benim yerine her şeyi otomatik yapan bir PowerShell Script (create_git_history.ps1) yazarak süreci kurtarttım.
