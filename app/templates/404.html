@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="error-card">
+    <div class="error-code">404</div>
+    <h2 class="error-title">Sayfa Bulunamadı</h2>
+    <p class="error-desc">Ulaşmaya çalıştığınız adres mevcut değil veya taşınmış olabilir. Lütfen URL adresini kontrol edin.</p>
+    <a href="{{ url_for('main.index') }}" class="btn-nav-action" style="padding: 0.75rem 2rem; display: inline-block; text-decoration: none;">Ana Sayfaya Dön</a>
+</div>
+{% endblock %}

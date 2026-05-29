@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-card" style="max-width: 600px;">
+    <h2 class="card-title">{{ title }}</h2>
+    <p class="card-subtitle">Görev bilgilerini eksiksiz şekilde doldurun</p>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.title.label(class="form-label") }}
+            {{ form.title(class="form-control", placeholder="Örn: BLG106 Proje Raporunu Hazırla") }}
+            {% for error in form.title.errors %}
+                <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control", rows="5", placeholder="Görev hakkında detaylı açıklamaları buraya yazabilirsiniz...") }}
+            {% for error in form.description.errors %}
+                <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.status.label(class="form-label") }}
+            {{ form.status(class="form-control") }}
+            {% for error in form.status.errors %}
+                <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.priority.label(class="form-label") }}
+            {{ form.priority(class="form-control") }}
+            {% for error in form.priority.errors %}
+                <span class="form-error">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <a href="{{ url_for('main.index') }}" class="btn-block btn-secondary" style="text-align: center; text-decoration: none; padding-top: 0.75rem; margin-top: 1rem;">İptal</a>
+            {{ form.submit(class="btn-block") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

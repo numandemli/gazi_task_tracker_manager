@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header">
+    <div class="dashboard-title">
+        <h1>Görev Gösterge Paneli</h1>
+        <p>Günlük işlerinizi ve görevlerinizi buradan kolayca organize edin.</p>
+    </div>
+    <a href="{{ url_for('main.task_create') }}" class="btn-nav-action">+ Yeni Görev Ekle</a>
+</div>
+
+<!-- Arama Çubuğu -->
+<form action="{{ url_for('main.index') }}" method="GET" style="display: flex; gap: 0.5rem; margin-bottom: 2rem; max-width: 500px;">
+    <input type="text" name="q" value="{{ search_query }}" class="form-control" placeholder="Görev başlıklarında ara..." style="padding: 0.5rem 1rem;">
+    {% if current_status %}<input type="hidden" name="status" value="{{ current_status }}">{% endif %}
+    {% if today_filter %}<input type="hidden" name="today" value="true">{% endif %}
+    <button type="submit" class="btn-nav-action" style="padding: 0.5rem 1.5rem; border: none; cursor: pointer;">Ara</button>
+    {% if search_query %}
+        <a href="{{ url_for('main.index', status=current_status, today='true' if today_filter else 'false') }}" class="btn-nav-action btn-secondary" style="text-align: center; text-decoration: none; padding-top: 0.55rem; width: 100px;">Temizle</a>
+    {% endif %}
+</form>
+
+<!-- Filtreleme Menüsü -->
+<div class="filter-bar">
+    <a href="{{ url_for('main.index', q=search_query) }}" class="filter-btn {% if not current_status and not today_filter %}active{% endif %}">Tüm Görevler</a>
+    <a href="{{ url_for('main.index', status='Todo', q=search_query, today='true' if today_filter else 'false') }}" class="filter-btn {% if current_status == 'Todo' %}active{% endif %}">Yapılacaklar</a>
+    <a href="{{ url_for('main.index', status='In Progress', q=search_query, today='true' if today_filter else 'false') }}" class="filter-btn {% if current_status == 'In Progress' %}active{% endif %}">Devam Edenler</a>
+    <a href="{{ url_for('main.index', status='Done', q=search_query, today='true' if today_filter else 'false') }}" class="filter-btn {% if current_status == 'Done' %}active{% endif %}">Tamamlananlar</a>
+    <a href="{{ url_for('main.index', today='true' if not today_filter else 'false', status=current_status, q=search_query) }}" class="filter-btn {% if today_filter %}active{% endif %}">📅 Bugün</a>
+</div>
+
+{% if tasks %}
+    <div class="tasks-grid">
+        {% for task in tasks %}
+            <div class="task-card">
+                <div>
+                    <div class="task-header" style="align-items: flex-start;">
+                        <div>
+                            <h3 class="task-title" style="margin-bottom: 0.35rem;">{{ task.title }}</h3>
+                            {% if task.priority == 'Low' %}
+                                <span class="badge badge-low" style="font-size: 0.65rem; padding: 0.15rem 0.45rem;">Düşük</span>
+                            {% elif task.priority == 'Medium' %}
+                                <span class="badge badge-medium" style="font-size: 0.65rem; padding: 0.15rem 0.45rem;">Orta</span>
+                            {% elif task.priority == 'High' %}
+                                <span class="badge badge-high" style="font-size: 0.65rem; padding: 0.15rem 0.45rem;">Yüksek</span>
+                            {% endif %}
+                        </div>
+                        {% if task.status == 'Todo' %}
+                            <span class="badge badge-pending">Yapılacak</span>
+                        {% elif task.status == 'In Progress' %}
+                            <span class="badge badge-progress">Devam Ediyor</span>
+                        {% elif task.status == 'Done' %}
+                            <span class="badge badge-completed">Tamamlandı</span>
+                        {% endif %}
+                    </div>
+                    <div class="task-body">
+                        {{ task.description or 'Açıklama belirtilmemiş.' }}
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="task-date">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle;">
+                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1 -2 2H2a2 2 0 0 1 -2 -2V3a2 2 0 0 1 2 -2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1 -1V4H1z"/>
+                        </svg>
+                        {{ task.created_at.strftime('%d.%m.%Y %H:%M') }}
+                    </div>
+                    
+                    <div class="task-footer">
+                        <!-- Hızlı Durum Değiştirme -->
+                        <div class="quick-status-menu">
+                            <button class="btn-action">Durum Değiştir ▾</button>
+                            <div class="status-dropdown">
+                                <a href="{{ url_for('main.task_quick_status', id=task.id, new_status='Todo') }}" class="status-option">Yapılacak</a>
+                                <a href="{{ url_for('main.task_quick_status', id=task.id, new_status='In Progress') }}" class="status-option">Devam Ediyor</a>
+                                <a href="{{ url_for('main.task_quick_status', id=task.id, new_status='Done') }}" class="status-option">Tamamlandı</a>
+                            </div>
+                        </div>
+                        
+                        <div class="task-actions">
+                            <a href="{{ url_for('main.task_update', id=task.id) }}" class="btn-action">Düzenle</a>
+                            <div class="btn-delete-container">
+                                <form action="{{ url_for('main.task_delete', id=task.id) }}" method="POST" onsubmit="return confirm('Bu görevi silmek istediğinize emin misiniz?');">
+                                    <button type="submit" class="btn-action btn-delete">Sil</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Sayfalama (Pagination) Kontrolleri -->
+    {% if pagination.pages > 1 %}
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2.5rem;">
+            {% if pagination.has_prev %}
+                <a href="{{ url_for('main.index', status=current_status, page=pagination.prev_num) }}" class="filter-btn">&laquo; Önceki</a>
+            {% else %}
+                <span class="filter-btn" style="opacity: 0.5; cursor: not-allowed;">&laquo; Önceki</span>
+            {% endif %}
+            
+            <span class="filter-btn active">Sayfa {{ pagination.page }} / {{ pagination.pages }}</span>
+            
+            {% if pagination.has_next %}
+                <a href="{{ url_for('main.index', status=current_status, page=pagination.next_num) }}" class="filter-btn">Sonraki &raquo;</a>
+            {% else %}
+                <span class="filter-btn" style="opacity: 0.5; cursor: not-allowed;">Sonraki &raquo;</span>
+            {% endif %}
+        </div>
+    {% endif %}
+{% else %}
+    <div class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3>Görev Bulunmamaktadır</h3>
+        <p>
+            {% if current_status %}
+                Seçilen filtrelere uygun görev bulunmuyor.
+            {% else %}
+                Henüz hiç görev oluşturmadınız. Hemen ilk görevinizi oluşturarak başlayın!
+            {% endif %}
+        </p>
+        <a href="{{ url_for('main.task_create') }}" class="btn-nav-action">+ İlk Görevi Oluştur</a>
+    </div>
+{% endif %}
+{% endblock %}

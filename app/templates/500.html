@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="error-card">
+    <div class="error-code">500</div>
+    <h2 class="error-title">Sistem Hatası Oluştu</h2>
+    <p class="error-desc">İç sunucularda beklenmeyen bir hata meydana geldi. Veritabanı veya sunucu servisleri geçici olarak yanıt vermiyor olabilir.</p>
+    <a href="{{ url_for('main.index') }}" class="btn-nav-action" style="padding: 0.75rem 2rem; display: inline-block; text-decoration: none;">Ana Sayfaya Dön</a>
+</div>
+{% endblock %}
