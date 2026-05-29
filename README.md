@@ -10,6 +10,9 @@ Gazi Üniversitesi BLG106 dersi kapsamında geliştirilmiş, modern ve minimalis
 * **Kullanıcı Profili:** Gravatar entegrasyonu ve tamamlanma istatistikleri.
 * **Docker Desteği:** PostgreSQL ve Gunicorn ile üretim (production) ortamına hazır mimari.
 
+## İlgili dosyalar
+   Projenin ilgili dosyalarına docs klasörü içinden veya  [BURAYA TIKLAYARAK](https://github.com/numandemli/gazi_task_tracker_manager/tree/master/docs) ulaşabilirsiniz.
+
 ## 🛠️ Kurulum ve Çalıştırma
 
 ### Docker ile (Önerilen)
@@ -18,9 +21,6 @@ Gazi Üniversitesi BLG106 dersi kapsamında geliştirilmiş, modern ve minimalis
    ```bash
    docker-compose up --build
 
-
-   ## İlgili dosyalar
-   Projenin ilgili dosyalarına docs klasörü içinden veya  [BURAYA TIKLAYARAK](https://github.com/numandemli/gazi_task_tracker_manager/tree/master/docs) ulaşabilirsiniz.
 
    ## 🎬 Proje Demo Videosu
 Projenin çalışır haldeki videosuna [BURAYA TIKLAYARAK](https://youtu.be/eEEdDRCWrVk) ulaşabilirsiniz.
